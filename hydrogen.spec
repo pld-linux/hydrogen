@@ -1,19 +1,17 @@
 Summary:	Pattern based drum machine
 Summary(pl):	Automat perkusyjny
 Name:		hydrogen
-Version:	0.9.0
-Release:	4
+Version:	0.9.1
+Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	a2f03ef688e7ac4eac983f05f7444c8f
-# Source0-size:	2322401
+# Source0-md5:	3c2b1db257f126f6d6f97e75a3d18ace
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-gcc34.patch
 URL:		http://hydrogen.sourceforge.net/
-BuildRequires:	alsa-lib-devel >= 0.9.0
-BuildRequires:	audiofile-devel >= 1:0.2.3
+BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	automake
 BuildRequires:	flac-devel
 BuildRequires:	jack-audio-connection-kit-devel >= 0.80.0
