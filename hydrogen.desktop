@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Hydrogen
+Comment=Pattern based drum machine
+Comment[pl]=Automat perkusyjny
+Exec=hydrogen
+Icon=/usr/share/hydrogen/img/icon32.png
+Terminal=false
+Type=Application
+Categories=Application;AudioVideo;
+# vi: encoding=utf-8
