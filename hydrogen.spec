@@ -37,7 +37,7 @@ tworzenia paternów rytmicznych.
 %patch0 -p1
 
 %build
-cp -f /usr/share/automake/config.sub .
+cp -f /usr/share/automake/config.sub admin
 %configure \
 	--disable-debug-messages
 
