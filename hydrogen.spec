@@ -9,6 +9,7 @@ Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}%{rel}.tar.gz
 # Source0-md5:	08534c6c372278d652ec00d888330847
 Source1:	%{name}.desktop
+Source2:	%{name}.png
 URL:		http://hydrogen.sourceforge.net/
 BuildRequires:  alsa-lib-devel >= 0.9.0
 BuildRequires:  audiofile-devel >= 0.2.3
@@ -45,7 +46,8 @@ install -d $RPM_BUILD_ROOT%{_desktopdir}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -c %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -61,3 +63,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/hydrogen/manual
 %{_mandir}/man1/hydrogen*
 %{_desktopdir}/*.desktop
+%{_pixmapsdir}/*.png
