@@ -6,7 +6,7 @@ Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	08534c6c372278d652ec00d888330847
+# Source0-md5:	73573d3fec305a71dfae8a1892eb655a
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 URL:		http://hydrogen.sourceforge.net/
