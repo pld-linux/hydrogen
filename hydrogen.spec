@@ -14,6 +14,7 @@ Patch0:		%{name}-gcc34.patch
 URL:		http://hydrogen.sourceforge.net/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	audiofile-devel >= 1:0.2.3
+BuildRequires:	automake
 BuildRequires:	flac-devel
 BuildRequires:	jack-audio-connection-kit-devel >= 0.80.0
 BuildRequires:	liblrdf-devel
@@ -42,7 +43,7 @@ cp -f /usr/share/automake/config.sub admin
 	--disable-debug-messages
 
 %{__make} \
-	CXXFLAGS="$CXXFLAGS %{rpmcflags}"
+	CXXFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
