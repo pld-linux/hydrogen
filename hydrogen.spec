@@ -1,18 +1,21 @@
 Summary:	Pattern based drum machine
 Summary(pl):	Automat perkusyjny
 Name:		hydrogen
-Version:	0.8.1
+Version:	0.8.2
 Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	73573d3fec305a71dfae8a1892eb655a
+# Source0-md5:	65e16cabfaa414dabdd0039cad5eee94
 Source1:	%{name}.desktop
 Source2:	%{name}.png
+Patch0:		%{name}-gcc34.patch
+Patch1:		%{name}-ui_spacer.patch
 URL:		http://hydrogen.sourceforge.net/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	audiofile-devel >= 1:0.2.3
 BuildRequires:	jack-audio-connection-kit-devel >= 0.80.0
+BuildRequires:	liblrdf-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	qt-devel >= 3.2.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -29,6 +32,8 @@ tworzenia paternów rytmicznych.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
