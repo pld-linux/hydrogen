@@ -55,8 +55,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/*
 %dir %{_datadir}/hydrogen/i18n
-%dir %{_datadir}/hydrogen/img
-%dir %{_datadir}/hydrogen/manual
 %lang(es) %{_datadir}/hydrogen/i18n/%{name}.es.qm
 %lang(it) %{_datadir}/hydrogen/i18n/%{name}.it.qm
 %{_datadir}/hydrogen/img
