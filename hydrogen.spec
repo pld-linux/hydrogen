@@ -11,7 +11,7 @@ Source1:	%{name}.desktop
 Source2:	%{name}.png
 URL:		http://hydrogen.sourceforge.net/
 BuildRequires:  alsa-lib-devel >= 0.9.0
-BuildRequires:  audiofile-devel >= 0.2.3
+BuildRequires:  audiofile-devel >= 1:0.2.3
 BuildRequires:  jack-audio-connection-kit-devel >= 0.80.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	qt-devel >= 3.2.1
