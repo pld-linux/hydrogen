@@ -2,7 +2,7 @@ Summary:	Pattern based drum machine
 Summary(pl):	Automat perkusyjny
 Name:		hydrogen
 Version:	0.9.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
