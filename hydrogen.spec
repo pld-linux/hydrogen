@@ -74,7 +74,6 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 # clean up documentation
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/*.{docbook,sh}
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/img/*.h2song
-rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/infoSplash/*.html
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/i18n/*.{sh,ts}
 rm -rf $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/man
 
