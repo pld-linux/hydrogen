@@ -8,7 +8,6 @@ Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
 # Source0-md5:	b14b45e22c790413d77e21a93e62eb47
 Source1:	%{name}.desktop
-Source2:	%{name}.png
 Patch0:		%{name}-gcc34.patch
 URL:		http://hydrogen.sourceforge.net/
 BuildRequires:	alsa-lib-devel >= 1.0.0
@@ -69,7 +68,6 @@ install -d $RPM_BUILD_ROOT{%{_mandir}/man1,%{_pixmapsdir}}
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 # clean up documentation
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/*.{docbook,sh}
@@ -81,7 +79,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/man
 install data/doc/man/C/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install data/doc/img/Tutorial2.h2song \
 	$RPM_BUILD_ROOT%{_datadir}/hydrogen/data/demo_songs
-
+install data/img/gray/icon48.png \
+	$RPM_BUILD_ROOT%{_pixmapsdir}/hydrogen.png
+	
 %clean
 rm -rf $RPM_BUILD_ROOT
 
