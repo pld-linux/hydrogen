@@ -17,6 +17,8 @@ BuildRequires:	jack-audio-connection-kit-devel >= 0.80.0
 BuildRequires:	liblrdf-devel
 BuildRequires:	libsndfile-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	pkgconfig
+BuildRequires:	qmake
 BuildRequires:	qt-devel >= 3.2.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -62,7 +64,7 @@ find . -type d -name CVS -print | xargs rm -rf {} \;
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_mandir}/man1,%{_pixmapsdir}}
+install -d $RPM_BUILD_ROOT{%{_mandir}/{man1,ru/man1},%{_pixmapsdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -77,6 +79,7 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/i18n/*.{sh,ts}
 rm -rf $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/man
 
 install data/doc/man/C/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install data/doc/man/ru/*.1 $RPM_BUILD_ROOT%{_mandir}/ru/man1
 install data/doc/img/Tutorial2.h2song \
 	$RPM_BUILD_ROOT%{_datadir}/hydrogen/data/demo_songs
 install data/img/gray/icon48.png \
@@ -119,6 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pt) %{_datadir}/hydrogen/data/i18n/%{name}.pt_BR.qm
 %lang(ru) %{_datadir}/hydrogen/data/i18n/%{name}.ru.qm
 %{_mandir}/man1/*.1*
+%lang(ru) %{_mandir}/ru/man1/*.1*
 
 %files doc
 %defattr(644,root,root,755)
