@@ -32,7 +32,7 @@ tworzenia paternów rytmicznych.
 
 %package doc
 Summary:	Hydrogen manual and tutorial
-Summary(pl):	Podrecznik i tutorial Hydrogena
+Summary(pl):	Podrêcznik i tutorial Hydrogena
 Group:		Documentation
 Requires:	%{name} = %{version}-%{release}
 
@@ -40,7 +40,7 @@ Requires:	%{name} = %{version}-%{release}
 Hydrogen manual and tutorial.
 
 %description doc -l pl
-Podrecznik i tutorial Hydrogena.
+Podrêcznik i tutorial Hydrogena.
 
 %prep
 %setup -q
