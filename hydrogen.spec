@@ -84,7 +84,7 @@ install data/doc/img/Tutorial2.h2song \
 	$RPM_BUILD_ROOT%{_datadir}/hydrogen/data/demo_songs
 install data/img/gray/icon48.png \
 	$RPM_BUILD_ROOT%{_pixmapsdir}/hydrogen.png
-	
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
