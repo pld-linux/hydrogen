@@ -1,5 +1,5 @@
 Summary:	Pattern based drum machine
-Summary(pl):	Automat perkusyjny
+Summary(pl.UTF-8):   Automat perkusyjny
 Name:		hydrogen
 Version:	0.9.3
 Release:	1
@@ -28,22 +28,22 @@ Hydrogen is a "free" pattern based drum machine for GNU/Linux. The
 application goal is to allow the simple and fast creation of rhythmic
 patterns.
 
-%description -l pl
+%description -l pl.UTF-8
 Hydrogen jest "wolnym" automatem perkusyjnym opartym o paterny dla
-GNU/Linuksa. Celem programu jest umo¿liwienie w prosty i szybki sposób
-tworzenia paternów rytmicznych.
+GNU/Linuksa. Celem programu jest umoÅ¼liwienie w prosty i szybki sposÃ³b
+tworzenia paternÃ³w rytmicznych.
 
 %package doc
 Summary:	Hydrogen manual and tutorial
-Summary(pl):	Podrêcznik i tutorial Hydrogena
+Summary(pl.UTF-8):   PodrÄ™cznik i tutorial Hydrogena
 Group:		Documentation
 Requires:	%{name} = %{version}-%{release}
 
 %description doc
 Hydrogen manual and tutorial.
 
-%description doc -l pl
-Podrêcznik i tutorial Hydrogena.
+%description doc -l pl.UTF-8
+PodrÄ™cznik i tutorial Hydrogena.
 
 %prep
 %setup -q
