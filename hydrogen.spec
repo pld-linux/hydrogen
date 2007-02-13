@@ -1,5 +1,5 @@
 Summary:	Pattern based drum machine
-Summary(pl.UTF-8):   Automat perkusyjny
+Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
 Version:	0.9.3
 Release:	1
@@ -35,7 +35,7 @@ tworzenia paternów rytmicznych.
 
 %package doc
 Summary:	Hydrogen manual and tutorial
-Summary(pl.UTF-8):   Podręcznik i tutorial Hydrogena
+Summary(pl.UTF-8):	Podręcznik i tutorial Hydrogena
 Group:		Documentation
 Requires:	%{name} = %{version}-%{release}
 
