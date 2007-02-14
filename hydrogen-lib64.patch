@@ -1,0 +1,14 @@
+diff -ur hydrogen-0.9.3.orig/plugins/wasp/Makefile.in hydrogen-0.9.3/plugins/wasp/Makefile.in
+--- hydrogen-0.9.3.orig/plugins/wasp/Makefile.in	2005-11-10 20:39:20.000000000 +0100
++++ hydrogen-0.9.3/plugins/wasp/Makefile.in	2007-02-14 17:13:16.000000000 +0100
+@@ -23,8 +23,8 @@
+ 
+ install:
+ 	@echo "Installing WASP plugins"
+-	mkdir -p $(DESTDIR)$(prefix)/lib/hydrogen/plugins/
+-	@install -vD *.so $(DESTDIR)$(prefix)/lib/hydrogen/plugins
++	mkdir -p $(DESTDIR)$(prefix)/lib64/hydrogen/plugins/
++	@install -vD *.so $(DESTDIR)$(prefix)/lib64/hydrogen/plugins
+ 
+ uninstall:
+ 	@rm -rf $(DESTDIR)$(prefix)/lib/hydrogen
