@@ -9,6 +9,7 @@ Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
 # Source0-md5:	d5840b5d330d433d00ea1727efb0fc7f
 Source1:	%{name}.desktop
 Patch0:		%{name}-gcc34.patch
+Patch1:		%{name}-flac113.patch
 URL:		http://www.hydrogen-music.org/
 BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	automake
@@ -48,6 +49,7 @@ Podrêcznik i tutorial Hydrogena.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
 export QTDIR=%{_prefix}
