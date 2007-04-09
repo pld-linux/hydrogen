@@ -20,7 +20,7 @@ BuildRequires:	libsndfile-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	qmake
-BuildRequires:	qt-devel >= 3.2.1
+BuildRequires:	qt-devel >= 6:3.2.1
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
