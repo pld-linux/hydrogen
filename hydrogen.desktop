@@ -1,10 +1,9 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Hydrogen
 Comment=Pattern based drum machine
 Comment[pl]=Automat perkusyjny
 Exec=hydrogen
-Icon=hydrogen.png
+Icon=hydrogen
 Terminal=false
 Type=Application
 Categories=Qt;Audio;
