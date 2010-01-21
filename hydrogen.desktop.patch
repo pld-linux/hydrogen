@@ -1,0 +1,21 @@
+--- hydrogen.desktop.orig	2010-01-21 16:30:06.150394521 +0100
++++ hydrogen.desktop	2010-01-21 16:30:34.803137742 +0100
+@@ -1,15 +1,18 @@
+ [Desktop Entry]
+ Name=Hydrogen Drum Machine
+ Name[de]=Hydrogen Drumsequencer
++Name[pl]=Automat Perkusyjny Hydrogen
+ Name[ru]=Драм-машина Hydrogen
+ Name[tr]=Hydrogen Davul Makinası
+ Comment=Create drum sequences
+ Comment[de]=Schlagzeugsequenzen erstellen
++Comment[pl]=Tworzenie sekwencji perkusyjnych
+ Comment[ru]=Создание партий ударных инструментов
+ Comment[tr]=Davul partisyonu yaz
+ 
+ GenericName=Drum Machine
+ GenericName[de]=Drumsequencer
++GenericName[pl]=Automat Perkusyjny
+ GenericName[ru]=Драм-машина
+ GenericName[tr]=Davul Makinası
+ 

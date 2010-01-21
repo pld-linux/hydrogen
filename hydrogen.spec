@@ -1,27 +1,31 @@
 Summary:	Pattern based drum machine
 Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
-Version:	0.9.3
+Version:	0.9.4
 Release:	1
-License:	GPL
+License:	GPL v2, zlib (TinyXML Library)
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	d5840b5d330d433d00ea1727efb0fc7f
-Source1:	%{name}.desktop
-Patch0:		%{name}-gcc34.patch
-Patch1:		%{name}-flac113.patch
+# Source0-md5:	69b0e35a5bba8151347c5e6ec9e8e4f3
+Patch0:		%{name}.desktop.patch
 URL:		http://www.hydrogen-music.org/
+BuildRequires:	QtGui-devel >= 4.4.0
+BuildRequires:	QtNetwork-devel >= 4.4.0
+BuildRequires:	QtXml-devel >= 4.4.0
 BuildRequires:	alsa-lib-devel >= 1.0.0
-BuildRequires:	automake
-BuildRequires:	flac-devel
-BuildRequires:	jack-audio-connection-kit-devel >= 0.80.0
+BuildRequires:	flac-c++-devel
+BuildRequires:	jack-audio-connection-kit-devel >= 0.103.0
+BuildRequires:	lash-devel
 BuildRequires:	liblrdf-devel
-BuildRequires:	libsndfile-devel
-BuildRequires:	libstdc++-devel
+BuildRequires:	libsndfile-devel >= 1.0.17
+BuildRequires:	libtar-devel
 BuildRequires:	pkgconfig
-BuildRequires:	qmake
-BuildRequires:	qt-devel >= 6:3.2.1
-BuildRequires:	sed >= 4.0
+BuildRequires:	portaudio-devel
+BuildRequires:	portmidi-devel
+BuildRequires:	qt4-build
+BuildRequires:	qt4-linguist
+BuildRequires:	scons >= 0.98
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -31,8 +35,8 @@ patterns.
 
 %description -l pl.UTF-8
 Hydrogen jest "wolnym" automatem perkusyjnym opartym o paterny dla
-GNU/Linuksa. Celem programu jest umożliwienie w prosty i szybki sposób
-tworzenia paternów rytmicznych.
+GNU/Linuksa. Celem programu jest umożliwienie w prosty i szybki
+sposób tworzenia paternów rytmicznych.
 
 %package doc
 Summary:	Hydrogen manual and tutorial
@@ -48,60 +52,44 @@ Podręcznik i tutorial Hydrogena.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p0
+%patch0 -p0
+patch -p0 -s < patches/portaudio.patch
+patch -p0 -s < patches/portmidi.patch
 
 %build
-export QTDIR=%{_prefix}
-cp -f /usr/share/automake/config.sub admin
-
-# don't run update-menus (WTF is that?)
-sed -i -e 's|update-menus||' Makefile.in
-
-# clean up CVS trash
-find . -type d -name CVS -print | xargs rm -rf {} \;
-
-%configure
-%{__make} \
-	CXXFLAGS="%{rpmcflags}"
+%{__scons} \
+	prefix=%{_prefix} \
+	portaudio=1 \
+	portmidi=1 \
+	lash=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_mandir}/{man1,ru/man1},%{_pixmapsdir}}
 
-%{__make} install \
+%{__scons} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-
-# clean up documentation
-rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/*.{docbook,sh}
-rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/img/*.h2song
-rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/i18n/*.{sh,ts}
-rm -rf $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/man
-
-install data/doc/man/C/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install data/doc/man/ru/*.1 $RPM_BUILD_ROOT%{_mandir}/ru/man1
 install data/doc/img/Tutorial2.h2song \
 	$RPM_BUILD_ROOT%{_datadir}/hydrogen/data/demo_songs
-install data/img/gray/icon48.png \
-	$RPM_BUILD_ROOT%{_pixmapsdir}/hydrogen.png
+
+# clean up documentation
+rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/{Makefile,README.DOCUMENTATION.txt}
+rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/*.{docbook,po,pot}
+rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/img/*.h2song
+rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/i18n/*.ts
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README.txt
 %attr(755,root,root) %{_bindir}/*
-
-%dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/plugins
-%attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
 
 %dir %{_datadir}/hydrogen
 %dir %{_datadir}/hydrogen/data
 %dir %{_datadir}/hydrogen/data/demo_songs
+%dir %{_datadir}/hydrogen/data/i18n
 
 %{_datadir}/hydrogen/data/*.conf
 %{_datadir}/hydrogen/data/*.h2song
@@ -109,7 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/hydrogen/data/drumkits
 %{_datadir}/hydrogen/data/img
 %{_desktopdir}/*.desktop
-%{_pixmapsdir}/*.png
+%{_pixmapsdir}/*.svg
 
 # demo songs
 %{_datadir}/hydrogen/data/demo_songs/GM_*.h2song
@@ -121,17 +109,18 @@ rm -rf $RPM_BUILD_ROOT
 %lang(es) %{_datadir}/hydrogen/data/i18n/%{name}.es.qm
 %lang(fr) %{_datadir}/hydrogen/data/i18n/%{name}.fr.qm
 %lang(hu) %{_datadir}/hydrogen/data/i18n/%{name}.hu_HU.qm
+%lang(hr) %{_datadir}/hydrogen/data/i18n/%{name}.hr.qm
 %lang(it) %{_datadir}/hydrogen/data/i18n/%{name}.it.qm
 %lang(ja) %{_datadir}/hydrogen/data/i18n/%{name}.ja.qm
 %lang(nl) %{_datadir}/hydrogen/data/i18n/%{name}.nl.qm
 %lang(pl) %{_datadir}/hydrogen/data/i18n/%{name}.pl.qm
 %lang(pt) %{_datadir}/hydrogen/data/i18n/%{name}.pt_BR.qm
 %lang(ru) %{_datadir}/hydrogen/data/i18n/%{name}.ru.qm
-%{_mandir}/man1/*.1*
-%lang(ru) %{_mandir}/ru/man1/*.1*
+%lang(sv) %{_datadir}/hydrogen/data/i18n/%{name}.sv.qm
 
 %files doc
 %defattr(644,root,root,755)
+%doc data/doc/README.DOCUMENTATION.txt
 %dir %{_datadir}/hydrogen/data/doc
 %dir %{_datadir}/hydrogen/data/doc/img
 
@@ -139,13 +128,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/hydrogen/data/demo_songs/Tutorial2.h2song
 
 # images
-%lang(nl) %{_datadir}/hydrogen/data/doc/img/nl/*.png
+%lang(nl) %{_datadir}/hydrogen/data/doc/img/nl
 %{_datadir}/hydrogen/data/doc/img/*.png
 %{_datadir}/hydrogen/data/doc/img_tutorial
 %{_datadir}/hydrogen/data/doc/infoSplash
 
 # multilang manual & tutorial
-%lang(de) %{_datadir}/hydrogen/data/doc/manual_de.html
+%lang(ca) %{_datadir}/hydrogen/data/doc/manual_ca.html
 %lang(es) %{_datadir}/hydrogen/data/doc/manual_es.html
 %lang(fr) %{_datadir}/hydrogen/data/doc/manual_fr.html
 %lang(fr) %{_datadir}/hydrogen/data/doc/tutorial_fr.html
