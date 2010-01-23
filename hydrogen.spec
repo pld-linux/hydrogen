@@ -1,3 +1,5 @@
+# TODO:
+# - pass __cxx, rpmcxxflags and rpmldflags
 Summary:	Pattern based drum machine
 Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
@@ -53,8 +55,8 @@ Podręcznik i tutorial Hydrogena.
 %prep
 %setup -q
 %patch0 -p0
-patch -p0 -s < patches/portaudio.patch
-patch -p0 -s < patches/portmidi.patch
+%{__patch} -p0 -s < patches/portaudio.patch
+%{__patch} -p0 -s < patches/portmidi.patch
 
 %build
 %{__scons} \
