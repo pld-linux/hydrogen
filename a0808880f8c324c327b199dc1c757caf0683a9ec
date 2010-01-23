@@ -1,0 +1,3 @@
+- 0.8.1
+- no longer depends on libhydrogen - merged into hydrogen tree
+- %files updated
