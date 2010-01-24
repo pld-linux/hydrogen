@@ -1,5 +1,5 @@
 # TODO:
-# - pass __cxx, rpmcxxflags and rpmldflags
+# - pass __cxx and rpmldflags
 Summary:	Pattern based drum machine
 Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
@@ -10,6 +10,7 @@ Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
 # Source0-md5:	69b0e35a5bba8151347c5e6ec9e8e4f3
 Patch0:		%{name}.desktop.patch
+Patch1:		%{name}-flags.patch
 URL:		http://www.hydrogen-music.org/
 BuildRequires:	QtGui-devel >= 4.4.0
 BuildRequires:	QtNetwork-devel >= 4.4.0
@@ -55,6 +56,7 @@ Podręcznik i tutorial Hydrogena.
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p1
 %{__patch} -p0 -s < patches/portaudio.patch
 %{__patch} -p0 -s < patches/portmidi.patch
 
@@ -63,6 +65,8 @@ Podręcznik i tutorial Hydrogena.
 	prefix=%{_prefix} \
 	portaudio=1 \
 	portmidi=1 \
+	optflags="%{rpmcxxflags}" \
+	ldflags="%{rpmldflags}" \
 	lash=1
 
 %install
