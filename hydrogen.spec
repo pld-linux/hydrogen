@@ -3,12 +3,12 @@
 Summary:	Pattern based drum machine
 Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
-Version:	0.9.4
+Version:	0.9.5
 Release:	1
 License:	GPL v2, zlib (TinyXML Library)
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	69b0e35a5bba8151347c5e6ec9e8e4f3
+# Source0-md5:	e96f291d60e58f5d62fe616cee577dc0
 Patch0:		%{name}.desktop.patch
 Patch1:		%{name}-flags.patch
 URL:		http://www.hydrogen-music.org/
@@ -18,7 +18,7 @@ BuildRequires:	QtXml-devel >= 4.4.0
 BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	flac-c++-devel
 BuildRequires:	jack-audio-connection-kit-devel >= 0.103.0
-BuildRequires:	lash-devel
+BuildRequires:	lash-devel >= 0.5.0
 BuildRequires:	liblrdf-devel
 BuildRequires:	libsndfile-devel >= 1.0.17
 BuildRequires:	libtar-devel
@@ -58,7 +58,6 @@ Podręcznik i tutorial Hydrogena.
 %patch0 -p0
 %patch1 -p1
 %{__patch} -p0 -s < patches/portaudio.patch
-%{__patch} -p0 -s < patches/portmidi.patch
 
 %build
 %{__scons} \
@@ -71,6 +70,11 @@ Podręcznik i tutorial Hydrogena.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+# Temporary fix for. Scons install braks on not existance of bellow file
+# It should be fixed inside scons, but don't know how
+
+install -d $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/img/gray
 
 %{__scons} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -111,6 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/hydrogen/data/demo_songs/tutorial_georgyporgy.h2song
 
 # translations
+%lang(de) %{_datadir}/hydrogen/data/i18n/%{name}.ca.qm
+%lang(de) %{_datadir}/hydrogen/data/i18n/%{name}.cs.qm
 %lang(de) %{_datadir}/hydrogen/data/i18n/%{name}.de.qm
 %lang(es) %{_datadir}/hydrogen/data/i18n/%{name}.es.qm
 %lang(fr) %{_datadir}/hydrogen/data/i18n/%{name}.fr.qm
@@ -136,6 +142,7 @@ rm -rf $RPM_BUILD_ROOT
 # images
 %lang(nl) %{_datadir}/hydrogen/data/doc/img/nl
 %{_datadir}/hydrogen/data/doc/img/*.png
+%{_datadir}/hydrogen/data/doc/img/*.svg
 %{_datadir}/hydrogen/data/doc/img_tutorial
 %{_datadir}/hydrogen/data/doc/infoSplash
 
