@@ -7,7 +7,7 @@ Version:	0.9.5
 Release:	1
 License:	GPL v2, zlib (TinyXML Library)
 Group:		X11/Applications/Sound
-Source0:	http://dl.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
+Source0:	http://download.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
 # Source0-md5:	e96f291d60e58f5d62fe616cee577dc0
 Patch0:		%{name}.desktop.patch
 Patch1:		%{name}-flags.patch
