@@ -3,12 +3,12 @@
 Summary:	Pattern based drum machine
 Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
-Version:	0.9.5
+Version:	0.9.5.1
 Release:	1
 License:	GPL v2, zlib (TinyXML Library)
 Group:		X11/Applications/Sound
 Source0:	http://download.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	e96f291d60e58f5d62fe616cee577dc0
+# Source0-md5:	52f3a528705818c65acf546a3be4c6fb
 Patch0:		%{name}.desktop.patch
 Patch1:		%{name}-flags.patch
 URL:		http://www.hydrogen-music.org/
@@ -115,9 +115,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/hydrogen/data/demo_songs/tutorial_georgyporgy.h2song
 
 # translations
-%lang(de) %{_datadir}/hydrogen/data/i18n/%{name}.ca.qm
-%lang(de) %{_datadir}/hydrogen/data/i18n/%{name}.cs.qm
+%lang(ca) %{_datadir}/hydrogen/data/i18n/%{name}.ca.qm
+%lang(cs) %{_datadir}/hydrogen/data/i18n/%{name}.cs.qm
 %lang(de) %{_datadir}/hydrogen/data/i18n/%{name}.de.qm
+%lang(el) %{_datadir}/hydrogen/data/i18n/%{name}.el.qm
 %lang(es) %{_datadir}/hydrogen/data/i18n/%{name}.es.qm
 %lang(fr) %{_datadir}/hydrogen/data/i18n/%{name}.fr.qm
 %lang(hu) %{_datadir}/hydrogen/data/i18n/%{name}.hu_HU.qm
@@ -149,6 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 # multilang manual & tutorial
 %lang(ca) %{_datadir}/hydrogen/data/doc/manual_ca.html
 %lang(es) %{_datadir}/hydrogen/data/doc/manual_es.html
+%lang(es) %{_datadir}/hydrogen/data/doc/tutorial_es.html
 %lang(fr) %{_datadir}/hydrogen/data/doc/manual_fr.html
 %lang(fr) %{_datadir}/hydrogen/data/doc/tutorial_fr.html
 %lang(it) %{_datadir}/hydrogen/data/doc/manual_it.html
