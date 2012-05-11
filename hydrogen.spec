@@ -126,7 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_datadir}/hydrogen/data/i18n/%{name}.ja.qm
 %lang(nl) %{_datadir}/hydrogen/data/i18n/%{name}.nl.qm
 %lang(pl) %{_datadir}/hydrogen/data/i18n/%{name}.pl.qm
-%lang(pt) %{_datadir}/hydrogen/data/i18n/%{name}.pt_BR.qm
+%lang(pt_BR) %{_datadir}/hydrogen/data/i18n/%{name}.pt_BR.qm
 %lang(ru) %{_datadir}/hydrogen/data/i18n/%{name}.ru.qm
 %lang(sv) %{_datadir}/hydrogen/data/i18n/%{name}.sv.qm
 
