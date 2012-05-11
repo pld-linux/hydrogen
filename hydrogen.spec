@@ -7,7 +7,7 @@ Version:	0.9.5.1
 Release:	1
 License:	GPL v2, zlib (TinyXML Library)
 Group:		X11/Applications/Sound
-Source0:	http://download.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
 # Source0-md5:	52f3a528705818c65acf546a3be4c6fb
 Patch0:		%{name}.desktop.patch
 Patch1:		%{name}-flags.patch
@@ -38,8 +38,8 @@ patterns.
 
 %description -l pl.UTF-8
 Hydrogen jest "wolnym" automatem perkusyjnym opartym o paterny dla
-GNU/Linuksa. Celem programu jest umożliwienie w prosty i szybki
-sposób tworzenia paternów rytmicznych.
+GNU/Linuksa. Celem programu jest umożliwienie w prosty i szybki sposób
+tworzenia paternów rytmicznych.
 
 %package doc
 Summary:	Hydrogen manual and tutorial
