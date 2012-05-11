@@ -71,9 +71,8 @@ Podręcznik i tutorial Hydrogena.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-# Temporary fix for. Scons install braks on not existance of bellow file
+# Temporary fix. Scons install breaks on inexistance of directory below
 # It should be fixed inside scons, but don't know how
-
 install -d $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/img/gray
 
 %{__scons} install \
