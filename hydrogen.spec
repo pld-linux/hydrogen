@@ -36,6 +36,20 @@ BuildRequires:	qt4-linguist
 #BuildRequires:	xmlto
 #BuildRequires:	libxml2-progs
 Obsoletes:	%{name}-doc
+# drumkits can be installed from the application
+Obsoletes:	hydrogen-drumkits
+Obsoletes:	hydrogen-drumkits-3355606
+Obsoletes:	hydrogen-drumkits-DrumkitPack1
+Obsoletes:	hydrogen-drumkits-DrumkitPack2
+Obsoletes:	hydrogen-drumkits-EasternHop-1
+Obsoletes:	hydrogen-drumkits-TD-7
+Obsoletes:	hydrogen-drumkits-UltraAcousticKit
+Obsoletes:	hydrogen-drumkits-Millo-MultiLayered2
+Obsoletes:	hydrogen-drumkits-HardElectro1
+Obsoletes:	hydrogen-drumkits-ErnysPercussion
+Obsoletes:	hydrogen-drumkits-Millo-Drums_v.1
+Obsoletes:	hydrogen-drumkits-Electric-Empire-Kit
+Obsoletes:	hydrogen-drumkits-Yamaha-Vintage-Kit
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
