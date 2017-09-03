@@ -93,9 +93,6 @@ install -d $RPM_BUILD_ROOT%{_pixmapsdir}
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cp -an data/doc/img/Tutorial2.h2song \
-	$RPM_BUILD_ROOT%{_datadir}/hydrogen/data/demo_songs
-
 cp -p $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/img/gray/h2-icon.svg $RPM_BUILD_ROOT%{_pixmapsdir}/h2-icon.svg
 
 rm -rf $RPM_BUILD_ROOT%{_includedir}/hydrogen
