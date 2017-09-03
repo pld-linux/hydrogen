@@ -1,34 +1,40 @@
+#
 # TODO:
-# - pass __cxx and rpmldflags
+#	- fix localized manuals build
+
 Summary:	Pattern based drum machine
 Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
-Version:	0.9.5.1
+Version:	0.9.7
 Release:	1
 License:	GPL v2, zlib (TinyXML Library)
 Group:		X11/Applications/Sound
 Source0:	http://downloads.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	52f3a528705818c65acf546a3be4c6fb
+# Source0-md5:	fcc5639144f74efdb70c76c8edfc4f64
 Patch0:		%{name}.desktop.patch
-Patch1:		%{name}-flags.patch
+Patch1:		mandir.patch
 URL:		http://www.hydrogen-music.org/
 BuildRequires:	QtGui-devel >= 4.4.0
 BuildRequires:	QtNetwork-devel >= 4.4.0
 BuildRequires:	QtXml-devel >= 4.4.0
-BuildRequires:	alsa-lib-devel >= 1.0.0
-BuildRequires:	flac-c++-devel
+BuildRequires:	QtXmlPatterns-devel >= 4.4.0
+BuildRequires:	cmake >= 2.6
+BuildRequires:	libsndfile-devel >= 1.0.18
+BuildRequires:	libarchive-devel
 BuildRequires:	jack-audio-connection-kit-devel >= 0.103.0
+BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	lash-devel >= 0.5.0
 BuildRequires:	liblrdf-devel
-BuildRequires:	libsndfile-devel >= 1.0.17
-BuildRequires:	libtar-devel
 BuildRequires:	pkgconfig
-BuildRequires:	portaudio-devel
+# BuildRequires:	portaudio-devel < 19
 BuildRequires:	portmidi-devel
 BuildRequires:	qt4-build
 BuildRequires:	qt4-linguist
-BuildRequires:	scons >= 0.98
-BuildRequires:	zlib-devel
+# for translated manuals
+#BuildRequires:	gnome-doc-utils
+#BuildRequires:	kde4-poxml
+#BuildRequires:	xmlto
+#BuildRequires:	libxml2-progs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -55,37 +61,50 @@ Podręcznik i tutorial Hydrogena.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 %patch1 -p1
-%{__patch} -p0 -s < patches/portaudio.patch
 
 %build
-%{__scons} \
-	prefix=%{_prefix} \
-	portaudio=1 \
-	portmidi=1 \
-	optflags="%{rpmcxxflags}" \
-	ldflags="%{rpmldflags}" \
-	lash=1
+mkdir build
+cd build
+%cmake .. \
+    -DWANT_DEBUG=%{debug} \
+    -DWANT_JACK=1 \
+    -DWANT_ALSA=1 \
+    -DWANT_LIBARCHIVE=1 \
+    -DWANT_RUBBERBAND=1 \
+    -DWANT_OSS=1 \
+    -DWANT_PORTAUDIO=0 \
+    -DWANT_PORTMIDI=1 \
+    -DWANT_LASH=1 \
+    -DWANT_LRDF=1 \
+    -DWANT_COREAUDIO=1 \
+    -DWANT_COREMIDI=1
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_pixmapsdir}
 
-# Temporary fix. Scons install breaks on inexistance of directory below
-# It should be fixed inside scons, but don't know how
-install -d $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/img/gray
-
-%{__scons} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install data/doc/img/Tutorial2.h2song \
+cp -an data/doc/img/Tutorial2.h2song \
 	$RPM_BUILD_ROOT%{_datadir}/hydrogen/data/demo_songs
 
+cp -p $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/img/gray/h2-icon.svg $RPM_BUILD_ROOT%{_pixmapsdir}/h2-icon.svg
+
+rm -rf $RPM_BUILD_ROOT%{_includedir}/hydrogen
+rm -rf $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/i18n/{stats.py,updateTranslations.sh}
+
 # clean up documentation
-rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/{Makefile,README.DOCUMENTATION.txt}
+rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/{Makefile,README.DOCUMENTATION.txt,TODO}
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/*.{docbook,po,pot}
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/img/*.h2song
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/i18n/*.ts
+
+%post	-p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,6 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README.txt
 %attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_libdir}/libhydrogen-core-%{version}.so
 
 %dir %{_datadir}/hydrogen
 %dir %{_datadir}/hydrogen/data
@@ -105,6 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/hydrogen/data/*.wav
 %{_datadir}/hydrogen/data/drumkits
 %{_datadir}/hydrogen/data/img
+%{_datadir}/hydrogen/data/xsd
 %{_desktopdir}/*.desktop
 %{_pixmapsdir}/*.svg
 
@@ -120,6 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(el) %{_datadir}/hydrogen/data/i18n/%{name}.el.qm
 %lang(es) %{_datadir}/hydrogen/data/i18n/%{name}.es.qm
 %lang(fr) %{_datadir}/hydrogen/data/i18n/%{name}.fr.qm
+%lang(gl) %{_datadir}/hydrogen/data/i18n/%{name}.gl.qm
 %lang(hu) %{_datadir}/hydrogen/data/i18n/%{name}.hu_HU.qm
 %lang(hr) %{_datadir}/hydrogen/data/i18n/%{name}.hr.qm
 %lang(it) %{_datadir}/hydrogen/data/i18n/%{name}.it.qm
@@ -128,13 +150,21 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pl) %{_datadir}/hydrogen/data/i18n/%{name}.pl.qm
 %lang(pt_BR) %{_datadir}/hydrogen/data/i18n/%{name}.pt_BR.qm
 %lang(ru) %{_datadir}/hydrogen/data/i18n/%{name}.ru.qm
+%lang(sr) %{_datadir}/hydrogen/data/i18n/%{name}.sr.qm
 %lang(sv) %{_datadir}/hydrogen/data/i18n/%{name}.sv.qm
+
+%{_mandir}/man1/hydrogen.1*
+%{_datadir}/appdata/*.xml
+
+%dir %{_datadir}/hydrogen/data/doc
 
 %files doc
 %defattr(644,root,root,755)
 %doc data/doc/README.DOCUMENTATION.txt
-%dir %{_datadir}/hydrogen/data/doc
+%doc data/doc/TODO
 %dir %{_datadir}/hydrogen/data/doc/img
+
+%{_datadir}/hydrogen/data/doc/MidiInstrumentMapping.ods
 
 # demo songs
 %{_datadir}/hydrogen/data/demo_songs/Tutorial2.h2song
@@ -142,19 +172,18 @@ rm -rf $RPM_BUILD_ROOT
 # images
 %lang(nl) %{_datadir}/hydrogen/data/doc/img/nl
 %{_datadir}/hydrogen/data/doc/img/*.png
-%{_datadir}/hydrogen/data/doc/img/*.svg
 %{_datadir}/hydrogen/data/doc/img_tutorial
-%{_datadir}/hydrogen/data/doc/infoSplash
 
 # multilang manual & tutorial
-%lang(ca) %{_datadir}/hydrogen/data/doc/manual_ca.html
-%lang(es) %{_datadir}/hydrogen/data/doc/manual_es.html
-%lang(es) %{_datadir}/hydrogen/data/doc/tutorial_es.html
-%lang(fr) %{_datadir}/hydrogen/data/doc/manual_fr.html
-%lang(fr) %{_datadir}/hydrogen/data/doc/tutorial_fr.html
-%lang(it) %{_datadir}/hydrogen/data/doc/manual_it.html
-%lang(it) %{_datadir}/hydrogen/data/doc/tutorial_it.html
-%lang(nl) %{_datadir}/hydrogen/data/doc/manual_nl.html
+#%lang(ca) %{_datadir}/hydrogen/data/doc/manual_ca.html
+#%lang(es) %{_datadir}/hydrogen/data/doc/manual_es.html
+#%lang(es) %{_datadir}/hydrogen/data/doc/tutorial_es.html
+#%lang(fr) %{_datadir}/hydrogen/data/doc/manual_fr.html
+#%lang(fr) %{_datadir}/hydrogen/data/doc/tutorial_fr.html
+#%lang(it) %{_datadir}/hydrogen/data/doc/manual_it.html
+#%lang(it) %{_datadir}/hydrogen/data/doc/tutorial_it.html
+#%lang(nl) %{_datadir}/hydrogen/data/doc/manual_nl.html
 %{_datadir}/hydrogen/data/doc/manual.html
 %{_datadir}/hydrogen/data/doc/manual_en.html
-%{_datadir}/hydrogen/data/doc/tutorial_en.html
+%{_datadir}/hydrogen/data/new_tutorial/img_tutorial
+%{_datadir}/hydrogen/data/new_tutorial/tutorial_en.html
