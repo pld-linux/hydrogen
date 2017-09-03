@@ -14,41 +14,41 @@ Source0:	http://downloads.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
 Patch0:		%{name}.desktop.patch
 Patch1:		mandir.patch
 URL:		http://www.hydrogen-music.org/
+# BuildRequires:	portaudio-devel < 19
 BuildRequires:	QtGui-devel >= 4.4.0
 BuildRequires:	QtNetwork-devel >= 4.4.0
 BuildRequires:	QtXml-devel >= 4.4.0
 BuildRequires:	QtXmlPatterns-devel >= 4.4.0
-BuildRequires:	cmake >= 2.6
-BuildRequires:	libsndfile-devel >= 1.0.18
-BuildRequires:	libarchive-devel
-BuildRequires:	jack-audio-connection-kit-devel >= 0.103.0
 BuildRequires:	alsa-lib-devel >= 1.0.0
+BuildRequires:	cmake >= 2.6
+BuildRequires:	jack-audio-connection-kit-devel >= 0.103.0
 BuildRequires:	lash-devel >= 0.5.0
+BuildRequires:	libarchive-devel
 BuildRequires:	liblrdf-devel
+BuildRequires:	libsndfile-devel >= 1.0.18
 BuildRequires:	pkgconfig
-# BuildRequires:	portaudio-devel < 19
 BuildRequires:	portmidi-devel
 BuildRequires:	qt4-build
 BuildRequires:	qt4-linguist
 # for translated manuals
 #BuildRequires:	gnome-doc-utils
 #BuildRequires:	kde4-poxml
-#BuildRequires:	xmlto
 #BuildRequires:	libxml2-progs
-Obsoletes:	%{name}-doc
+#BuildRequires:	xmlto
+Obsoletes:	hydrogen-doc
 # drumkits can be installed from the application
 Obsoletes:	hydrogen-drumkits
 Obsoletes:	hydrogen-drumkits-3355606
 Obsoletes:	hydrogen-drumkits-DrumkitPack1
 Obsoletes:	hydrogen-drumkits-DrumkitPack2
 Obsoletes:	hydrogen-drumkits-EasternHop-1
+Obsoletes:	hydrogen-drumkits-Electric-Empire-Kit
+Obsoletes:	hydrogen-drumkits-ErnysPercussion
+Obsoletes:	hydrogen-drumkits-HardElectro1
+Obsoletes:	hydrogen-drumkits-Millo-Drums_v.1
+Obsoletes:	hydrogen-drumkits-Millo-MultiLayered2
 Obsoletes:	hydrogen-drumkits-TD-7
 Obsoletes:	hydrogen-drumkits-UltraAcousticKit
-Obsoletes:	hydrogen-drumkits-Millo-MultiLayered2
-Obsoletes:	hydrogen-drumkits-HardElectro1
-Obsoletes:	hydrogen-drumkits-ErnysPercussion
-Obsoletes:	hydrogen-drumkits-Millo-Drums_v.1
-Obsoletes:	hydrogen-drumkits-Electric-Empire-Kit
 Obsoletes:	hydrogen-drumkits-Yamaha-Vintage-Kit
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -71,18 +71,18 @@ tworzenia paternów rytmicznych.
 mkdir build
 cd build
 %cmake .. \
-    -DWANT_DEBUG=%{debug} \
-    -DWANT_JACK=1 \
-    -DWANT_ALSA=1 \
-    -DWANT_LIBARCHIVE=1 \
-    -DWANT_RUBBERBAND=1 \
-    -DWANT_OSS=1 \
-    -DWANT_PORTAUDIO=0 \
-    -DWANT_PORTMIDI=1 \
-    -DWANT_LASH=1 \
-    -DWANT_LRDF=1 \
-    -DWANT_COREAUDIO=1 \
-    -DWANT_COREMIDI=1
+	-DWANT_DEBUG=%{debug} \
+	-DWANT_JACK=1 \
+	-DWANT_ALSA=1 \
+	-DWANT_LIBARCHIVE=1 \
+	-DWANT_RUBBERBAND=1 \
+	-DWANT_OSS=1 \
+	-DWANT_PORTAUDIO=0 \
+	-DWANT_PORTMIDI=1 \
+	-DWANT_LASH=1 \
+	-DWANT_LRDF=1 \
+	-DWANT_COREAUDIO=1 \
+	-DWANT_COREMIDI=1
 
 %{__make}
 
