@@ -35,6 +35,7 @@ BuildRequires:	qt4-linguist
 #BuildRequires:	kde4-poxml
 #BuildRequires:	xmlto
 #BuildRequires:	libxml2-progs
+Obsoletes:	%{name}-doc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,18 +47,6 @@ patterns.
 Hydrogen jest "wolnym" automatem perkusyjnym opartym o paterny dla
 GNU/Linuksa. Celem programu jest umożliwienie w prosty i szybki sposób
 tworzenia paternów rytmicznych.
-
-%package doc
-Summary:	Hydrogen manual and tutorial
-Summary(pl.UTF-8):	Podręcznik i tutorial Hydrogena
-Group:		Documentation
-Requires:	%{name} = %{version}-%{release}
-
-%description doc
-Hydrogen manual and tutorial.
-
-%description doc -l pl.UTF-8
-Podręcznik i tutorial Hydrogena.
 
 %prep
 %setup -q
@@ -112,6 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README.txt
+%doc data/doc/README.DOCUMENTATION.txt
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/libhydrogen-core-%{version}.so
 
@@ -130,9 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pixmapsdir}/*.svg
 
 # demo songs
-%{_datadir}/hydrogen/data/demo_songs/GM_*.h2song
-%{_datadir}/hydrogen/data/demo_songs/TR808kit-demo.h2song
-%{_datadir}/hydrogen/data/demo_songs/tutorial_georgyporgy.h2song
+%{_datadir}/hydrogen/data/demo_songs/*.h2song
 
 # translations
 %lang(ca) %{_datadir}/hydrogen/data/i18n/%{name}.ca.qm
@@ -157,17 +145,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/appdata/*.xml
 
 %dir %{_datadir}/hydrogen/data/doc
-
-%files doc
-%defattr(644,root,root,755)
-%doc data/doc/README.DOCUMENTATION.txt
-%doc data/doc/TODO
 %dir %{_datadir}/hydrogen/data/doc/img
 
 %{_datadir}/hydrogen/data/doc/MidiInstrumentMapping.ods
-
-# demo songs
-%{_datadir}/hydrogen/data/demo_songs/Tutorial2.h2song
 
 # images
 %lang(nl) %{_datadir}/hydrogen/data/doc/img/nl
@@ -177,13 +157,12 @@ rm -rf $RPM_BUILD_ROOT
 # multilang manual & tutorial
 #%lang(ca) %{_datadir}/hydrogen/data/doc/manual_ca.html
 #%lang(es) %{_datadir}/hydrogen/data/doc/manual_es.html
-#%lang(es) %{_datadir}/hydrogen/data/doc/tutorial_es.html
 #%lang(fr) %{_datadir}/hydrogen/data/doc/manual_fr.html
-#%lang(fr) %{_datadir}/hydrogen/data/doc/tutorial_fr.html
 #%lang(it) %{_datadir}/hydrogen/data/doc/manual_it.html
-#%lang(it) %{_datadir}/hydrogen/data/doc/tutorial_it.html
 #%lang(nl) %{_datadir}/hydrogen/data/doc/manual_nl.html
 %{_datadir}/hydrogen/data/doc/manual.html
 %{_datadir}/hydrogen/data/doc/manual_en.html
+
+%dir %{_datadir}/hydrogen/data/new_tutorial
 %{_datadir}/hydrogen/data/new_tutorial/img_tutorial
 %{_datadir}/hydrogen/data/new_tutorial/tutorial_en.html
