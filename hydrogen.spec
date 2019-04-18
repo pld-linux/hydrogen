@@ -1,35 +1,47 @@
 #
 # TODO:
 #	- fix localized manuals build
+#
+# Conditional build:
+%bcond_without	tests		# build with tests
 
+
+%define beta	beta1
+%define rel	1
 Summary:	Pattern based drum machine
 Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
-Version:	0.9.7
-Release:	1
+Version:	1.0.0
+Release:	0.%{beta}.%{rel}
 License:	GPL v2, zlib (TinyXML Library)
 Group:		X11/Applications/Sound
-Source0:	http://downloads.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	fcc5639144f74efdb70c76c8edfc4f64
-Patch0:		%{name}.desktop.patch
-Patch1:		mandir.patch
+Source0:	http://downloads.sourceforge.net/hydrogen/%{name}-%{version}-%{beta}.tar.gz
+# Source0-md5:	788540070d1874473fd1019e9de73f4b
+Patch0:		mandir.patch
 URL:		http://www.hydrogen-music.org/
 # BuildRequires:	portaudio-devel < 19
-BuildRequires:	QtGui-devel >= 4.4.0
-BuildRequires:	QtNetwork-devel >= 4.4.0
-BuildRequires:	QtXml-devel >= 4.4.0
-BuildRequires:	QtXmlPatterns-devel >= 4.4.0
+BuildRequires:	Qt5Network-devel
+BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5Core-devel
+BuildRequires:	Qt5Widgets-devel
+BuildRequires:	Qt5Xml-devel
+BuildRequires:	Qt5XmlPatterns-devel
 BuildRequires:	alsa-lib-devel >= 1.0.0
-BuildRequires:	cmake >= 2.6
+BuildRequires:	cmake >= 2.8.11
+%{?with_tests:BuildRequires:	cppunit-devel}
 BuildRequires:	jack-audio-connection-kit-devel >= 0.103.0
+BuildRequires:	ladspa-devel
 BuildRequires:	lash-devel >= 0.5.0
 BuildRequires:	libarchive-devel
+BuildRequires:	liblo-devel
 BuildRequires:	liblrdf-devel
 BuildRequires:	libsndfile-devel >= 1.0.18
 BuildRequires:	pkgconfig
 BuildRequires:	portmidi-devel
-BuildRequires:	qt4-build
-BuildRequires:	qt4-linguist
+BuildRequires:	pulseaudio-devel
+BuildRequires:	rubberband-devel
+BuildRequires:	qt5-build
+BuildRequires:	qt5-linguist
 # for translated manuals
 #BuildRequires:	gnome-doc-utils
 #BuildRequires:	kde4-poxml
@@ -63,9 +75,8 @@ GNU/Linuksa. Celem programu jest umożliwienie w prosty i szybki sposób
 tworzenia paternów rytmicznych.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-%{beta}
 %patch0 -p1
-%patch1 -p1
 
 %build
 mkdir build
@@ -76,15 +87,24 @@ cd build
 	-DWANT_ALSA=1 \
 	-DWANT_LIBARCHIVE=1 \
 	-DWANT_RUBBERBAND=1 \
-	-DWANT_OSS=1 \
+	-DWANT_OSS=0 \
 	-DWANT_PORTAUDIO=0 \
 	-DWANT_PORTMIDI=1 \
 	-DWANT_LASH=1 \
 	-DWANT_LRDF=1 \
-	-DWANT_COREAUDIO=1 \
-	-DWANT_COREMIDI=1
+	-DWANT_COREAUDIO=0 \
+	-DWANT_COREMIDI=0 \
+	-DWANT_LADSPA=1 \
+	-DLADSPA_INCLUDE_DIR=/usr/include \
+	-DLADSPA_LIBRARIES=%{_libdir}/ladspa
 
 %{__make}
+cd ..
+
+%if %{with tests}
+%{__make} -C build tests
+./build/src/tests/tests
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -99,7 +119,7 @@ rm -rf $RPM_BUILD_ROOT%{_includedir}/hydrogen
 rm -rf $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/i18n/{stats.py,updateTranslations.sh}
 
 # clean up documentation
-rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/{Makefile,README.DOCUMENTATION.txt,TODO}
+rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/{Makefile,README.md,TODO}
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/*.{docbook,po,pot}
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/doc/img/*.h2song
 rm -f $RPM_BUILD_ROOT%{_datadir}/hydrogen/data/i18n/*.ts
@@ -112,8 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README.txt
-%doc data/doc/README.DOCUMENTATION.txt
 %attr(755,root,root) %{_bindir}/*
+%doc data/doc/README.md
 %attr(755,root,root) %{_libdir}/libhydrogen-core-%{version}.so
 
 %dir %{_datadir}/hydrogen
@@ -151,6 +171,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ru) %{_datadir}/hydrogen/data/i18n/%{name}.ru.qm
 %lang(sr) %{_datadir}/hydrogen/data/i18n/%{name}.sr.qm
 %lang(sv) %{_datadir}/hydrogen/data/i18n/%{name}.sv.qm
+%lang(uk) %{_datadir}/hydrogen/data/i18n/%{name}.uk.qm
 
 %{_mandir}/man1/hydrogen.1*
 %{_datadir}/appdata/*.xml
