@@ -2,17 +2,17 @@
 #
 # Conditional build:
 %bcond_with	rubberband	# RubberBand support (unadvised as of 1.2.3)
-%bcond_without	tests		# test suite
+%bcond_with	tests		# test suite (need real sound drivers)
 
 Summary:	Pattern based drum machine
 Summary(pl.UTF-8):	Automat perkusyjny
 Name:		hydrogen
-Version:	1.2.3
+Version:	1.2.6
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	https://downloads.sourceforge.net/hydrogen/%{name}-%{version}.tar.gz
-# Source0-md5:	6fb1fab7ecbad534b1fb6087edcf0beb
+# Source0-md5:	b0a93b00e303a463183ba01ae395e45e
 URL:		http://hydrogen-music.org/
 BuildRequires:	Qt5Core-devel >= 5
 BuildRequires:	Qt5Gui-devel >= 5
@@ -42,7 +42,7 @@ BuildRequires:	qt5-build >= 5
 BuildRequires:	qt5-linguist >= 5
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	zlib-devel
-%if %{with tests} && %(grep '^/dev/shm' /proc/mounts ; echo $?)
+%if %{with tests} && %(grep -q ' /dev/shm ' /proc/mounts ; echo $?)
 # tests fail without /dev/shm
 BuildRequires:	mounted(/dev/shm)
 %endif
@@ -124,7 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README.md
+%doc AUTHORS CHANGELOG.md README.md
 %attr(755,root,root) %{_bindir}/h2cli
 %attr(755,root,root) %{_bindir}/h2player
 %attr(755,root,root) %{_bindir}/hydrogen
